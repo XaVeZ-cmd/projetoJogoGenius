@@ -48,3 +48,18 @@ let checkOrder = () => {
     nextLevel();
   }
 }
+
+//Função para o click do usuário
+
+let click = (color) => {
+  clickedOrder[clickedOrder.length] = color;
+  createColorElement(color).classList.add('selected');
+
+  setTimeOut(() => {
+  createColorElement(color).classList.remove('selected');
+  });
+
+  checkOrder();
+}
+
+//
