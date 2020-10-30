@@ -7,15 +7,15 @@ let score = 0;
 // 2 = amarelo
 // 3 = azul
 
-const blue = document.querySelector('blue');
-const red = document.querySelector('red');
-const green = document.querySelector('green');
-const yellow = document.querySelector('yellow');
+const blue = document.querySelector('.blue');
+const red = document.querySelector('.red');
+const green = document.querySelector('.green');
+const yellow = document.querySelector('.yellow');
 
 
 //cria ordem aleatória de cores
 
-let shuffleOrder = () =>{
+let shuffleOrder = () => {
   let colorOrder = Math.floor(Math.random() * 4);
   order[order.length] = colorOrder;
   clickedOrder = [];
@@ -25,7 +25,7 @@ let shuffleOrder = () =>{
     lightColor(elementColor, Number(i) + 1);
   }
 }
-//acende a p´roxima cor
+//acende a próxima cor
 let lightColor = (element, number) => {
   number = number * 500;
   setTimeOut(() => {
@@ -39,7 +39,7 @@ let lightColor = (element, number) => {
 let checkOrder = () => {
   for(let i in clickedOrder){
     if(clickedOrder[i] != order[i]){
-      lose();
+      gameOver();
       break;
     }
   }
@@ -57,9 +57,52 @@ let click = (color) => {
 
   setTimeOut(() => {
   createColorElement(color).classList.remove('selected');
-  });
-
   checkOrder();
+  }, 250);
 }
 
-//
+//Função que retorna a cor
+
+let createColorElement = (color) => {
+  if(color == 0){
+    return green;
+  } else if(color == 1){
+    return red;
+  } else if(color == 2){
+    return yellow;
+  } else if(color == 3){
+    return blue;
+  }
+}
+
+//Função para próximo nível
+
+let nextLevel = () => {
+  score++;
+  shuffleOrder();
+}
+
+//Função Game Over
+
+let gameOver = () => {
+  alert(`Pontuação ${score}\nVocê perdeu o jogo!\nClique em OK para reiniciar um novo jogo`);
+  order = [];
+  clickedOrder = [];
+  playGame();
+}
+
+//Função início do jogo
+let playGame = () => {
+  alert(`Bem vindo ao Gênesis! Iniciando um novo jogo"`);
+  score = 0;
+  nextLevel();
+}
+
+
+//Eventos de clique para as cores
+green.onclick = () => click(0);
+red.onclick = () => click(1);
+yellow.onclick = () => click(2);
+blue.onclick = () => click(3);
+
+playGame();
